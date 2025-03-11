@@ -1,0 +1,1 @@
+from .wrapper import fibonacci_py as fibonacci

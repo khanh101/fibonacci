@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mamba env export | grep -v "^prefix: " > environment.yml
