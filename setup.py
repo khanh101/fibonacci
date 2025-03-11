@@ -1,5 +1,3 @@
-import os
-
 import setuptools
 from Cython import Distutils
 
@@ -30,7 +28,7 @@ if __name__ == "__main__":
                     "gmpxx",
                 ],
                 include_dirs=[
-                    os.path.join(MODULE, "inc"),
+                    f"{MODULE}/inc",
                 ],
                 extra_compile_args=[
                     "-O4",
