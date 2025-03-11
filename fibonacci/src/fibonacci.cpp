@@ -7,7 +7,7 @@
 using Z = mpz_class; // integer
 using Q = mpq_class; // rational
 
-// quadratic field Q[√x] = {a + b √x: a ∈ Z, b ∈ Z}
+// quadratic field Q[√x] = {a + b √x: a ∈ Q, b ∈ Q}
 template<int d>
 struct QF {
   Q a;
