@@ -1,8 +1,8 @@
 import time
-
 from fibonacci import fibonacci
-
 import sys
+
+sys.set_int_max_str_digits(0) # no conversion limit
 
 def fibonacci_py(n: int) -> int:
     if n <= 1:
