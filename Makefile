@@ -14,4 +14,4 @@ clean:
 	rm -rf \
 		build \
 		$(MODULE).egg-info \
-		$(MODULE)/*.so $(MODULE)/*.c
+		$(MODULE)/*.so $(MODULE)/*.c  $(MODULE)/*.cpp
