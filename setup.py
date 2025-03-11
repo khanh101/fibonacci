@@ -21,11 +21,16 @@ if __name__ == "__main__":
                     os.path.join(MODULE, "src", "fibonacci.cpp"),
                     os.path.join(MODULE, "wrapper.pyx")
                 ],
-                libraries=[],
+                libraries=[
+                    "stdc++", # for cpp compilation
+                    "gmp",
+                    "gmpxx",
+                ],
                 include_dirs=[
                     os.path.join(MODULE, "inc"),
                 ],
-                extra_compile_args=[],
+                extra_compile_args=[
+                ],
             )
         ],
 

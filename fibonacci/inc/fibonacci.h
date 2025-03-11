@@ -11,13 +11,8 @@
 extern "C" {
 #endif
 
-// some example functions for reference
-int echo_int(int);
-char* echo_string(char*);
-void fill_array(int*, int, int);
-
-// fibonacci: return the n-th fibonacci number
-uint64_t fibonacci(uint64_t n);
+// fibonacci: return the n-th fibonacci number (n in hex string)
+char* fibonacci(char* n_str);
 
 #ifdef __cplusplus
 }

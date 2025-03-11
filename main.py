@@ -1,5 +1,5 @@
 from fibonacci import fibonacci
 
+import sys
 
-for i in range(10):
-    print(fibonacci(i))
+print(fibonacci(int(sys.argv[1])))

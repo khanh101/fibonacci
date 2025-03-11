@@ -9,6 +9,11 @@
         "include_dirs": [
             "fibonacci/inc"
         ],
+        "libraries": [
+            "stdc++",
+            "gmp",
+            "gmpxx"
+        ],
         "name": "fibonacci.wrapper",
         "sources": [
             "fibonacci/wrapper.pyx",
