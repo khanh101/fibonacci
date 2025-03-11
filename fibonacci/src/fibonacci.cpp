@@ -1,5 +1,6 @@
 #include "fibonacci.h"
 #include <cstdlib>
+#include <cstdint>
 #include <gmpxx.h>
 
 // Q[√x] - a + b √x
