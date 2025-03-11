@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <gmpxx.h>
 
-using Z = mpz_class;
-using Q = mpq_class;
+using Z = mpz_class; // integer
+using Q = mpq_class; // rational
 
 // quadratic field Q[√x] = {a + b √x: a ∈ Z, b ∈ Z}
 template<int d>
