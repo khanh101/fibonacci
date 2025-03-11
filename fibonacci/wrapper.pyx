@@ -22,7 +22,7 @@ def hex_bytes_to_int(x_bytes: bytes) -> int:
     return x
 
 
-def fibonacci_py(n: int, encoding: str="utf-8", errors: str="strict") -> int:
+def fibonacci_py(n: int) -> int:
     cdef char* m_str_c
     try:
         m_str_c = fibonacci(int_to_hex_bytes(n))
