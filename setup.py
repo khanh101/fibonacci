@@ -6,6 +6,8 @@ from Cython import Distutils
 MODULE = "fibonacci"
 AUTHOR = "khanh"
 
+
+
 if __name__ == "__main__":
     setuptools.setup(
         install_requires=["cython", ],
@@ -17,6 +19,7 @@ if __name__ == "__main__":
         ext_modules=[
             setuptools.Extension(
                 name=f"{MODULE}.wrapper",
+                language="c++",
                 sources=[
                     os.path.join(MODULE, "src", "fibonacci.cpp"),
                     os.path.join(MODULE, "wrapper.pyx")
@@ -31,6 +34,9 @@ if __name__ == "__main__":
                 ],
                 extra_compile_args=[
                     "-O4",
+                    "-std=c++23",
+                    "-march=native",
+                    "-fno-math-errno",
                 ],
             )
         ],
