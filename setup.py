@@ -30,6 +30,7 @@ if __name__ == "__main__":
                     os.path.join(MODULE, "inc"),
                 ],
                 extra_compile_args=[
+                    "-O4",
                 ],
             )
         ],

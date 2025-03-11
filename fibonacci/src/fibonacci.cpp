@@ -58,12 +58,16 @@ struct QRX {
 };
 
 char* fibonacci(char* n_str) {
-  auto root5 = QRX<5>(0, 1); // 0 + √5
-  auto phi = QRX<5>(mpq_class(1, 2), mpq_class(1, 2)); // 1/2 + 1/2 √5
-  auto psi = QRX<5>(mpq_class(1, 2), mpq_class(-1, 2)); // 1/2 - 1/2 √5
+  QRX<5> root5 = QRX<5>(0, 1); // 0 + √5
+  QRX<5> phi = QRX<5>(mpq_class(1, 2), mpq_class(1, 2)); // 1/2 + 1/2 √5
+  QRX<5> psi = QRX<5>(mpq_class(1, 2), mpq_class(-1, 2)); // 1/2 - 1/2 √5
 
-  auto n = mpz_class(n_str, 16); // convert base 16 to mpz
-  auto m = (phi.pow(int(n)) - psi.pow(int(n))) / root5;
-  auto m_str = m.a.get_num().get_si().get_str(16);
-  return m_str.c_str();
+  mpz_class n = mpz_class(n_str, 16); // convert base 16 to mpz
+  QRX<5> m = (phi.pow(n) - psi.pow(n)) / root5;
+  std::string m_str = m.a.get_num().get_str(16);
+  uint64_t len = std::strlen(m_str.c_str());
+  char* m_str_out = (char*) std::malloc((1 + len) * sizeof(char));
+  std::memcpy(m_str_out, m_str.c_str(), len);
+  m_str_out[len] = '\0';
+  return m_str_out;
 }

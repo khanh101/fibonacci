@@ -4,7 +4,7 @@ MODULE = fibonacci
 .PHONY: run build clean
 
 run: build
-	python main.py
+	python main.py 12
 
 build: clean
 	python -m pip install -e .
