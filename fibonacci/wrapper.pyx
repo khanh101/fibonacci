@@ -5,6 +5,8 @@ cimport libc.string as string
 cdef extern from "fibonacci.h":
     char* fibonacci(char*)
 
+import time
+
 def fibonacci_py(n: int, encoding: str="utf-8", errors: str="strict") -> int:
     n_str:str = hex(n).lstrip("0x") # int to str
     n_bytes: bytes = n_str.encode(encoding=encoding, errors=errors) # str to bytes
