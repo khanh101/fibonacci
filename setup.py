@@ -21,8 +21,8 @@ if __name__ == "__main__":
                 name=f"{MODULE}.wrapper",
                 language="c++",
                 sources=[
-                    os.path.join(MODULE, "src", "fibonacci.cpp"),
-                    os.path.join(MODULE, "wrapper.pyx")
+                    f"{MODULE}/src/fibonacci.cpp",
+                    f"{MODULE}/wrapper.pyx",
                 ],
                 libraries=[
                     "stdc++", # for cpp compilation
