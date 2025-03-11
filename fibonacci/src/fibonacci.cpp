@@ -43,12 +43,6 @@ struct QRX {
     if (n == 0) {
       return QRX<x>(1, 0);
     }
-    if (n == 1) {
-      return *this;
-    }
-    if (n == 2) {
-      return (*this) * (*this);
-    }
     if (n % 2 == 0) {
       auto half = pow(n / 2);
       return half * half;
