@@ -1,4 +1,5 @@
 #include "fibonacci.h"
+#include <cassert>
 #include <cstdlib>
 #include <cstdint>
 #include <gmpxx.h>
@@ -55,17 +56,26 @@ struct QF {
   }
 };
 
+Z str_to_Z(char* s) {
+  return Z(s, 16); // convert base 16 to mpz
+}
+
+char* Z_to_str(Z z) {
+  std::string str = z.get_str(16);
+  char* c_str = (char*) std::malloc(str.size() + 1);
+  std::memcpy(c_str, str.c_str(), str.size());
+  c_str[str.size()] = '\0';
+  return c_str;
+}
+
 char* fibonacci(char* n_str) {
   QF<5> root5 = QF<5>(0, 1); // 0 + √5
   QF<5> phi = QF<5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
   QF<5> psi = QF<5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
 
-  Z n = Z(n_str, 16); // convert base 16 to mpz
+  Z n = str_to_Z(n_str);
   QF<5> m = (phi.pow(n) - psi.pow(n)) / root5;
-  std::string m_str = m.a.get_num().get_str(16);
-  uint64_t len = std::strlen(m_str.c_str());
-  char* m_str_out = (char*) std::malloc((1 + len) * sizeof(char));
-  std::memcpy(m_str_out, m_str.c_str(), len);
-  m_str_out[len] = '\0';
-  return m_str_out;
+  m.a.canonicalize();
+  Z anum = m.a.get_num();
+  return Z_to_str(anum);
 }
