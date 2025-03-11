@@ -6,7 +6,7 @@
 using Z = mpz_class;
 using Q = mpq_class;
 
-// quadratic field Q[√x] {a + b √x: a ∈ Z, b ∈ Z}
+// quadratic field Q[√x] = {a + b √x: a ∈ Z, b ∈ Z}
 template<int d>
 struct QF {
   Q a;
