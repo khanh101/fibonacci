@@ -5,6 +5,7 @@ dependencies:
   - bzip2=1.0.8=h99b78c6_7
   - ca-certificates=2025.1.31=hf0a4a13_0
   - cython=3.0.12=py312h02233ea_0
+  - gmp=6.3.0=h7bae524_2
   - libcxx=19.1.7=ha82da77_0
   - libexpat=2.6.4=h286801f_0
   - libffi=3.4.2=h3422bc3_5
