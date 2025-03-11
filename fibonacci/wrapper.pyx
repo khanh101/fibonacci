@@ -1,11 +1,8 @@
 #cython: language_level=3
 cimport libc.stdlib as stdlib
-cimport libc.string as string
 
 cdef extern from "fibonacci.h":
     char* fibonacci(char*)
-
-import time
 
 def int_to_hex_bytes(x: int) -> bytes:
     encoding: str = "utf-8"
