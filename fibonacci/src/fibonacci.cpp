@@ -2,12 +2,12 @@
 #include <cstdlib>
 #include <gmpxx.h>
 
-using Z = mpz_class; // integer
-using Q = mpq_class; // rational
-
 // TODO - add more algebraic structures: Ring, Euclidean Domain, Polynomial ring, Matrix ring, Finite Field, etc
 // TODO - add some number theory algorithms
 // TODO - add some coding algorithms: ReedSolomon code, algebraic geometry code
+
+using Z = mpz_class; // integer
+using Q = mpq_class; // rational
 
 // quadratic field F(√d) = Frac(F[√d]) = F[√d] = {a + b √d: a ∈ Q, b ∈ Q}
 // where F is a field
@@ -18,32 +18,32 @@ struct QF {
   QF(F a, F b = 1) : a(a), b(b) {}
   ~QF() {}
   QF<F, d> operator+(const QF<F, d> &other) const {
-    const Q& a1 = a;
-    const Q& b1 = b;
-    const Q& a2 = other.a;
-    const Q& b2 = other.b;
+    const F& a1 = a;
+    const F& b1 = b;
+    const F& a2 = other.a;
+    const F& b2 = other.b;
     return QF<F, d>(a1 + a2, b1 + b2);
   }
   QF<F, d> operator-(const QF<F, d> &other) const {
-    const Q& a1 = a;
-    const Q& b1 = b;
-    const Q& a2 = other.a;
-    const Q& b2 = other.b;
+    const F& a1 = a;
+    const F& b1 = b;
+    const F& a2 = other.a;
+    const F& b2 = other.b;
     return QF<F, d>(a1 - a2, b1 - b2);
   }
   QF<F, d> operator*(const QF<F, d> &other) const {
-    const Q& a1 = a;
-    const Q& b1 = b;
-    const Q& a2 = other.a;
-    const Q& b2 = other.b;
+    const F& a1 = a;
+    const F& b1 = b;
+    const F& a2 = other.a;
+    const F& b2 = other.b;
     return QF<F, d>(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
   }
   QF<F, d> operator/(const QF<F, d> &other) const {
-    const Q& a1 = a;
-    const Q& b1 = b;
-    const Q& a2 = other.a;
-    const Q& b2 = other.b;
-    Q den = a2 * a2 - b2 * b2 * d;
+    const F& a1 = a;
+    const F& b1 = b;
+    const F& a2 = other.a;
+    const F& b2 = other.b;
+    F den = a2 * a2 - b2 * b2 * d;
     return QF<F, d>((a1 * a2 - b1 * b2 * d)/den, (b1 * a2 - a1 * b2 * d)/den);
   }
   QF<F, d> pow(Z n) const {
@@ -58,6 +58,8 @@ struct QF {
     }
   }
 };
+
+
 
 Z str_to_Z(char* s) {
   return Z(s, 16); // convert base 16 to mpz
