@@ -5,7 +5,9 @@
 using Z = mpz_class; // integer
 using Q = mpq_class; // rational
 
-// TODO - adding more: Ring, Euclidean Domain, Polynomial ring, Matrix ring, etc
+// TODO - add more algebraic structures: Ring, Euclidean Domain, Polynomial ring, Matrix ring, Finite Field, etc
+// TODO - add some number theory algorithms
+// TODO - add some coding algorithms: ReedSolomon code, algebraic geometry code
 
 // quadratic field F(√d) = {a + b √d: a ∈ Q, b ∈ Q}
 // where F is a field
