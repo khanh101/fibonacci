@@ -14,4 +14,4 @@ if __name__ == "__main__":
     sys.set_int_max_str_digits(0) # no conversion limit
     n = int(sys.argv[1])
     x = fibonacci(n)
-    print(x)
+    print(x, file=sys.stdout)
