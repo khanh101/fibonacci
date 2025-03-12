@@ -9,7 +9,7 @@ using Q = mpq_class; // rational
 // TODO - add some number theory algorithms
 // TODO - add some coding algorithms: ReedSolomon code, algebraic geometry code
 
-// quadratic field F(√d) = {a + b √d: a ∈ Q, b ∈ Q}
+// quadratic field F(√d) = Frac(F[√d]) = F[√d] = {a + b √d: a ∈ Q, b ∈ Q}
 // where F is a field
 template<class F, int d>
 struct QF {
