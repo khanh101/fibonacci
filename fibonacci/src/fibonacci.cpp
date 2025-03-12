@@ -1,4 +1,5 @@
 #include "fibonacci.h"
+#include <cassert>
 #include <cstdlib>
 #include <gmpxx.h>
 
@@ -17,6 +18,13 @@ struct QF {
   F b;
   QF(F a, F b = 1) : a(a), b(b) {}
   ~QF() {}
+  static QF<F, d> zero() {
+    return QF<F, d>(0, 0);
+  }
+  static QF<F, d> one() {
+    return QF<F, d>(1, 0);
+  }
+
   QF<F, d> operator+(const QF<F, d> &other) const {
     const F& a1 = a;
     const F& b1 = b;
@@ -47,6 +55,9 @@ struct QF {
     return QF<F, d>((a1 * a2 - b1 * b2 * d)/den, (b1 * a2 - a1 * b2 * d)/den);
   }
   QF<F, d> pow(Z n) const {
+    if (n < 0) {
+      return one() / pow(-n);
+    }
     if (n == 0) {
       return QF<F, d>(1, 0);
     }
