@@ -13,53 +13,53 @@ using Q = mpq_class; // rational
 // quadratic field F(√d) = Frac(F[√d]) = F[√d] = {a + b √d: a ∈ Q, b ∈ Q}
 // where F is a field
 template<class F, int d>
-struct QF {
+struct QuadraticField {
   F a;
   F b;
-  QF(F a, F b = 1) : a(a), b(b) {}
-  ~QF() {}
-  static QF<F, d> zero() {
-    return QF<F, d>(0, 0);
+  QuadraticField(F a, F b = 1) : a(a), b(b) {}
+  ~QuadraticField() {}
+  static QuadraticField<F, d> zero() {
+    return QuadraticField<F, d>(0, 0);
   }
-  static QF<F, d> one() {
-    return QF<F, d>(1, 0);
+  static QuadraticField<F, d> one() {
+    return QuadraticField<F, d>(1, 0);
   }
 
-  QF<F, d> operator+(const QF<F, d> &other) const {
+  QuadraticField<F, d> operator+(const QuadraticField<F, d> &other) const {
     const F& a1 = a;
     const F& b1 = b;
     const F& a2 = other.a;
     const F& b2 = other.b;
-    return QF<F, d>(a1 + a2, b1 + b2);
+    return QuadraticField<F, d>(a1 + a2, b1 + b2);
   }
-  QF<F, d> operator-(const QF<F, d> &other) const {
+  QuadraticField<F, d> operator-(const QuadraticField<F, d> &other) const {
     const F& a1 = a;
     const F& b1 = b;
     const F& a2 = other.a;
     const F& b2 = other.b;
-    return QF<F, d>(a1 - a2, b1 - b2);
+    return QuadraticField<F, d>(a1 - a2, b1 - b2);
   }
-  QF<F, d> operator*(const QF<F, d> &other) const {
+  QuadraticField<F, d> operator*(const QuadraticField<F, d> &other) const {
     const F& a1 = a;
     const F& b1 = b;
     const F& a2 = other.a;
     const F& b2 = other.b;
-    return QF<F, d>(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
+    return QuadraticField<F, d>(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
   }
-  QF<F, d> operator/(const QF<F, d> &other) const {
+  QuadraticField<F, d> operator/(const QuadraticField<F, d> &other) const {
     const F& a1 = a;
     const F& b1 = b;
     const F& a2 = other.a;
     const F& b2 = other.b;
     F den = a2 * a2 - b2 * b2 * d;
-    return QF<F, d>((a1 * a2 - b1 * b2 * d)/den, (b1 * a2 - a1 * b2 * d)/den);
+    return QuadraticField<F, d>((a1 * a2 - b1 * b2 * d)/den, (b1 * a2 - a1 * b2 * d)/den);
   }
-  QF<F, d> pow(Z n) const {
+  QuadraticField<F, d> pow(Z n) const {
     if (n < 0) {
       return one() / pow(-n);
     }
     if (n == 0) {
-      return QF<F, d>(1, 0);
+      return QuadraticField<F, d>(1, 0);
     }
     if (n % 2 == 0) {
       auto half = pow(n / 2);
@@ -85,12 +85,12 @@ char* Z_to_str(Z z) {
 }
 
 char* fibonacci(char* n_str) {
-  QF<Q, 5> root5 = QF<Q, 5>(0, 1); // 0 + √5
-  QF<Q, 5> phi = QF<Q, 5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
-  QF<Q, 5> psi = QF<Q, 5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
+  QuadraticField<Q, 5> root5 = QuadraticField<Q, 5>(0, 1); // 0 + √5
+  QuadraticField<Q, 5> phi = QuadraticField<Q, 5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
+  QuadraticField<Q, 5> psi = QuadraticField<Q, 5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
 
   Z n = str_to_Z(n_str);
-  QF<Q, 5> m = (phi.pow(n) - psi.pow(n)) / root5;
+  QuadraticField<Q, 5> m = (phi.pow(n) - psi.pow(n)) / root5;
   m.a.canonicalize();
   Z anum = m.a.get_num();
   return Z_to_str(anum);
