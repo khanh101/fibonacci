@@ -1,51 +1,52 @@
 #include "fibonacci.h"
-#include <cassert>
 #include <cstdlib>
-#include <cstdint>
 #include <gmpxx.h>
 
 using Z = mpz_class; // integer
 using Q = mpq_class; // rational
 
-// quadratic field Q[√x] = {a + b √x: a ∈ Q, b ∈ Q}
-template<int d>
+// TODO - adding more: Ring, Euclidean Domain, Polynomial ring, Matrix ring, etc
+
+// quadratic field F(√d) = {a + b √d: a ∈ Q, b ∈ Q}
+// where F is a field
+template<class F, int d>
 struct QF {
-  Q a;
-  Q b;
-  QF(Q a, Q b = 1) : a(a), b(b) {}
+  F a;
+  F b;
+  QF(F a, F b = 1) : a(a), b(b) {}
   ~QF() {}
-  QF<d> operator+(const QF<d> &other) const {
+  QF<F, d> operator+(const QF<F, d> &other) const {
     const Q& a1 = a;
     const Q& b1 = b;
     const Q& a2 = other.a;
     const Q& b2 = other.b;
-    return QF<d>(a1 + a2, b1 + b2);
+    return QF<F, d>(a1 + a2, b1 + b2);
   }
-  QF<d> operator-(const QF<d> &other) const {
+  QF<F, d> operator-(const QF<F, d> &other) const {
     const Q& a1 = a;
     const Q& b1 = b;
     const Q& a2 = other.a;
     const Q& b2 = other.b;
-    return QF<d>(a1 - a2, b1 - b2);
+    return QF<F, d>(a1 - a2, b1 - b2);
   }
-  QF<d> operator*(const QF<d> &other) const {
+  QF<F, d> operator*(const QF<F, d> &other) const {
     const Q& a1 = a;
     const Q& b1 = b;
     const Q& a2 = other.a;
     const Q& b2 = other.b;
-    return QF<d>(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
+    return QF<F, d>(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
   }
-  QF<d> operator/(const QF<d> &other) const {
+  QF<F, d> operator/(const QF<F, d> &other) const {
     const Q& a1 = a;
     const Q& b1 = b;
     const Q& a2 = other.a;
     const Q& b2 = other.b;
     Q den = a2 * a2 - b2 * b2 * d;
-    return QF<d>((a1 * a2 - b1 * b2 * d)/den, (b1 * a2 - a1 * b2 * d)/den);
+    return QF<F, d>((a1 * a2 - b1 * b2 * d)/den, (b1 * a2 - a1 * b2 * d)/den);
   }
-  QF<d> pow(Z n) const {
+  QF<F, d> pow(Z n) const {
     if (n == 0) {
-      return QF<d>(1, 0);
+      return QF<F, d>(1, 0);
     }
     if (n % 2 == 0) {
       auto half = pow(n / 2);
@@ -69,12 +70,12 @@ char* Z_to_str(Z z) {
 }
 
 char* fibonacci(char* n_str) {
-  QF<5> root5 = QF<5>(0, 1); // 0 + √5
-  QF<5> phi = QF<5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
-  QF<5> psi = QF<5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
+  QF<Q, 5> root5 = QF<Q, 5>(0, 1); // 0 + √5
+  QF<Q, 5> phi = QF<Q, 5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
+  QF<Q, 5> psi = QF<Q, 5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
 
   Z n = str_to_Z(n_str);
-  QF<5> m = (phi.pow(n) - psi.pow(n)) / root5;
+  QF<Q, 5> m = (phi.pow(n) - psi.pow(n)) / root5;
   m.a.canonicalize();
   Z anum = m.a.get_num();
   return Z_to_str(anum);
