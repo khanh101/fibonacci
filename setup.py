@@ -1,9 +1,17 @@
 import setuptools
-from Cython import Distutils
+from setuptools.command.build_ext import build_ext
+
 
 MODULE = "fibonacci"
 AUTHOR = "khanh"
 
+class ClangBuildExt(build_ext):
+    def build_extensions(self):
+        # Set the compiler executables
+        self.compiler.set_executable("compiler_so", "clang++")
+        self.compiler.set_executable("compiler_cxx", "clang++")
+        self.compiler.set_executable("linker_so", "clang++")
+        super().build_extensions()
 
 
 if __name__ == "__main__":
@@ -13,7 +21,7 @@ if __name__ == "__main__":
         zip_safe=False,
         name=MODULE,
         author=AUTHOR,
-        cmdclass={"build_ext": Distutils.build_ext},
+        cmdclass={"build_ext": ClangBuildExt},
         ext_modules=[
             setuptools.Extension(
                 name=f"{MODULE}.wrapper",
