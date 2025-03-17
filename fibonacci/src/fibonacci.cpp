@@ -122,7 +122,7 @@ char* fibonacci_faster(char* n_str) {
   ZRD<5> phi = ZRD<5>(1, 1); // 1 + √5
   ZRD<5> m = phi.pow(n);
   Z result;
-  mpz_div_2exp(result.get_mpz_t(), m.b.get_mpz_t(), n.get_ui()); // result = b / 2^n
+  mpz_div_2exp(result.get_mpz_t(), m.b.get_mpz_t(), n.get_ui()-1); // result = b / 2^n
   return Z_to_str(result);
 }
 
