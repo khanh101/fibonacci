@@ -10,13 +10,46 @@
 using Z = mpz_class; // integer
 using Q = mpq_class; // rational
 
+// Z[√d]
+class ZRD {
+  Z a;
+  Z b;
+  ZRD(Z a, Z b = 0): a(a), b(b) {}
+  ~ZRD() {}
+  static ZRD one() {
+    return ZRD(1, 0);
+  }
+  ZRD operator*(const ZRD& other) const {
+    const Z& a1 = a;
+    const Z& b1 = b;
+    const Z& a2 = other.a;
+    const Z& b2 = other.b;
+    return ZRD(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
+  }
+
+  ZRD pow(Z n) const {
+    if (n < 0) {
+      return one() / pow(-n);
+    }
+    if (n == 0) {
+      return ZRD(1, 0);
+    }
+    if (n % 2 == 0) {
+      auto half = pow(n / 2);
+      return half * half;
+    } else {
+      return (*this) * pow(n - 1);
+    }
+  }
+};
+
 // quadratic field F(√d) = Frac(F[√d]) = F[√d] = {a + b √d: a ∈ Q, b ∈ Q}
 // where F is a field
 template<class F, int d>
 struct QuadraticField {
   F a;
   F b;
-  QuadraticField(F a, F b = 1) : a(a), b(b) {}
+  QuadraticField(F a, F b = 0): a(a), b(b) {}
   ~QuadraticField() {}
   static QuadraticField<F, d> zero() {
     return QuadraticField<F, d>(0, 0);
@@ -71,7 +104,6 @@ struct QuadraticField {
 };
 
 
-
 Z str_to_Z(char* s) {
   return Z(s, 16); // convert base 16 to mpz
 }
@@ -85,6 +117,9 @@ char* Z_to_str(Z z) {
 }
 
 char* fibonacci(char* n_str) {
+
+
+  
   QuadraticField<Q, 5> root5 = QuadraticField<Q, 5>(0, 1); // 0 + √5
   QuadraticField<Q, 5> phi = QuadraticField<Q, 5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
   QuadraticField<Q, 5> psi = QuadraticField<Q, 5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
