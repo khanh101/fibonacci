@@ -3,6 +3,7 @@ cimport libc.stdlib as stdlib
 
 cdef extern from "fibonacci.h":
     char* fibonacci(char*)
+    char* fibonacci_faster(char*)
 
 def int_to_hex_bytes(x: int) -> bytes:
     encoding: str = "utf-8"
@@ -27,3 +28,13 @@ def fibonacci_py(n: int) -> int:
         return hex_bytes_to_int(m_bytes)
     finally:
         stdlib.free(m_str_c)
+
+def fibonacci_faster_py(n: int) -> int:
+    cdef char* m_str_c
+    try:
+        m_str_c = fibonacci_faster(int_to_hex_bytes(n))
+        m_bytes: bytes = m_str_c[:] # copy
+        return hex_bytes_to_int(m_bytes)
+    finally:
+        stdlib.free(m_str_c)
+

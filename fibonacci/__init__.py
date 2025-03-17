@@ -1,1 +1,1 @@
-from .wrapper import fibonacci_py as fibonacci
+from .wrapper import fibonacci_py as fibonacci, fibonacci_faster_py as fibonacci_faster

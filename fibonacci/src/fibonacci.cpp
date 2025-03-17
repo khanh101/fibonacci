@@ -11,7 +11,8 @@ using Z = mpz_class; // integer
 using Q = mpq_class; // rational
 
 // Z[√d]
-class ZRD {
+template<int d>
+struct ZRD {
   Z a;
   Z b;
   ZRD(Z a, Z b = 0): a(a), b(b) {}
@@ -29,7 +30,7 @@ class ZRD {
 
   ZRD pow(Z n) const {
     if (n < 0) {
-      return one() / pow(-n);
+      throw std::runtime_error("n < 0 not implemented");
     }
     if (n == 0) {
       return ZRD(1, 0);
@@ -116,10 +117,16 @@ char* Z_to_str(Z z) {
   return c_str;
 }
 
+char* fibonacci_faster(char* n_str) {
+  Z n = str_to_Z(n_str);
+  ZRD<5> phi = ZRD<5>(1, 1); // 1 + √5
+  ZRD<5> m = phi.pow(n);
+  Z result;
+  mpz_div_2exp(result.get_mpz_t(), m.b.get_mpz_t(), n.get_ui()); // result = b / 2^n
+  return Z_to_str(result);
+}
+
 char* fibonacci(char* n_str) {
-
-
-  
   QuadraticField<Q, 5> root5 = QuadraticField<Q, 5>(0, 1); // 0 + √5
   QuadraticField<Q, 5> phi = QuadraticField<Q, 5>(Q(1, 2), Q(1, 2)); // 1/2 + 1/2 √5
   QuadraticField<Q, 5> psi = QuadraticField<Q, 5>(Q(1, 2), Q(-1, 2)); // 1/2 - 1/2 √5
