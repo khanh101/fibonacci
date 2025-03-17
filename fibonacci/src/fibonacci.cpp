@@ -10,40 +10,6 @@
 using Z = mpz_class; // integer
 using Q = mpq_class; // rational
 
-// Z[√d]
-template<int d>
-struct ZRD {
-  Z a;
-  Z b;
-  ZRD(Z a, Z b = 0): a(a), b(b) {}
-  ~ZRD() {}
-  static ZRD one() {
-    return ZRD(1, 0);
-  }
-  ZRD operator*(const ZRD& other) const {
-    const Z& a1 = a;
-    const Z& b1 = b;
-    const Z& a2 = other.a;
-    const Z& b2 = other.b;
-    return ZRD(a1 * a2 + b1 * b2 * d, a1 * b2 + b1 * a2);
-  }
-
-  ZRD pow(Z n) const {
-    if (n < 0) {
-      throw std::runtime_error("n < 0 not implemented");
-    }
-    if (n == 0) {
-      return ZRD(1, 0);
-    }
-    if (n % 2 == 0) {
-      auto half = pow(n / 2);
-      return half * half;
-    } else {
-      return (*this) * pow(n - 1);
-    }
-  }
-};
-
 // quadratic field F(√d) = Frac(F[√d]) = F[√d] = {a + b √d: a ∈ Q, b ∈ Q}
 // where F is a field
 template<class F, int d>
@@ -115,15 +81,6 @@ char* Z_to_str(Z z) {
   std::memcpy(c_str, str.c_str(), str.size());
   c_str[str.size()] = '\0';
   return c_str;
-}
-
-char* fibonacci_faster(char* n_str) {
-  Z n = str_to_Z(n_str);
-  ZRD<5> phi = ZRD<5>(1, 1); // 1 + √5
-  ZRD<5> m = phi.pow(n);
-  Z result;
-  mpz_div_2exp(result.get_mpz_t(), m.b.get_mpz_t(), n.get_ui()-1); // result = b / 2^n
-  return Z_to_str(result);
 }
 
 char* fibonacci(char* n_str) {

@@ -2,5 +2,4 @@
 #define __FIBONACCI__
 // fibonacci: return the n-th fibonacci number (n in hex string)
 char* fibonacci(char* n_str);
-char* fibonacci_faster(char* n_str);
 #endif // __FIBONACCI__

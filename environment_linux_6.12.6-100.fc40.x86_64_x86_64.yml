@@ -1,4 +1,4 @@
-name: fibonacci
+name: fib
 channels:
   - conda-forge
 dependencies:
